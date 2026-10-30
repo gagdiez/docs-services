@@ -33,13 +33,9 @@ async function waitForAccessKey(
 
 async function createAndDeleteTmpAcc(beneficiary: string): Promise<void> {
   const apiKey = process.env.FASTNEAR_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("Faucet is not configured: FASTNEAR_API_KEY is required");
-  }
-
   const provider = new JsonRpcProvider({
     url: "https://rpc.testnet.fastnear.com",
-    headers: { Authorization: `Bearer ${apiKey}` },
+    ...(apiKey ? { headers: { Authorization: `Bearer ${apiKey}` } } : {}),
   });
 
   const tmpAccount = `${beneficiary.slice(0, 32).replaceAll(".", "-")}-${Date.now()}.testnet`;
