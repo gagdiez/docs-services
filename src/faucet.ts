@@ -32,6 +32,12 @@ async function waitForAccessKey(
 }
 
 async function createAndDeleteTmpAcc(beneficiary: string): Promise<void> {
+  const apiKey = process.env.FASTNEAR_API_KEY?.trim();
+  const provider = new JsonRpcProvider({
+    url: "https://rpc.testnet.fastnear.com",
+    ...(apiKey ? { headers: { Authorization: `Bearer ${apiKey}` } } : {}),
+  });
+
   const tmpAccount = `${beneficiary.slice(0, 32).replaceAll(".", "-")}-${Date.now()}.testnet`;
 
   const signer = KeyPairSigner.fromSecretKey(FAUCET_SECRET_KEY);
@@ -52,7 +58,6 @@ async function createAndDeleteTmpAcc(beneficiary: string): Promise<void> {
     throw new Error(`Failed to create ${tmpAccount}: ${helperRes.status} ${body}`);
   }
 
-  const provider = new JsonRpcProvider({ url: "https://rpc.testnet.fastnear.com" });
   await waitForAccessKey(provider, tmpAccount, publicKeyStr);
 
   const account = new Account(tmpAccount, provider, signer);
