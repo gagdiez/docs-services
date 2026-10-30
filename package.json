@@ -1,12 +1,9 @@
 {
-  "name": "meilisearch-mcp-server",
+  "name": "near-testnet-faucet",
   "version": "1.0.0",
-  "description": "MCP server for MeiliSearch integration",
+  "description": "Simple NEAR testnet faucet service",
   "type": "module",
   "main": "dist/index.js",
-  "bin": {
-    "meilisearch-mcp": "./dist/index.js"
-  },
   "scripts": {
     "build": "tsc",
     "postinstall": "tsc",
@@ -14,10 +11,9 @@
     "dev": "tsx watch src/index.ts"
   },
   "keywords": [
-    "mcp",
-    "meilisearch",
-    "search",
-    "model-context-protocol"
+    "near",
+    "testnet",
+    "faucet"
   ],
   "license": "MIT",
   "dependencies": {
